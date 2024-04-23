@@ -2,7 +2,16 @@
  <br/>
   
   <div class="Panel">
-    <h4 class="Panel__Title Heading u-h2"><b>{{ settings.ship_title }}</b></h4>
+    <div class="policy-modal">
+      <h4 class="Panel__Title Heading u-h2"><b>{{ settings.ship_title }}</b></h4>
+      <a href="#demo-modal" class="material-icons ">i</a>
+      <div id="demo-modal" class="modal">
+        <div class="modal__content ">
+            {{ section.settings.freight_text }}
+          <a href="#" class="modal__close">×</a>
+        </div>
+      </div>    
+    </div>
   <div class="Panel__Content">
     <div class="ShippingEstimator"> 
       <div id="cs_shipping_rate">
@@ -148,7 +157,6 @@
               $(srates.rates).each(function(index,val) {
                 $('.ShippingEstimator__Error').hide();
                 html += '<li><span>'+val.service_name +' =  ' +Shopify.formatMoney(val.total_price,wmf)+'</span><br/><span class="shipdesc">'+val.description+'</span></li>' 
-                console.log("s:", val);
               });
               html += '</ul>'
               $('#shipping_rates').html(html).show();

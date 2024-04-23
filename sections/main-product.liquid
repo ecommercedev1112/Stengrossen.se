@@ -652,7 +652,6 @@
                               {% else %}
                                   <input type="hidden" name="quantity" value="1" />
                               {% endif %}
-                              <script>console.log({{ product.compare_at_price | json }})</script>
                               <button class="add-to-cart b button {% if enable_dynamic_payment_button %}alt{% endif %}" type="submit" name="add" >
                                   {%- if product.template_suffix contains 'preorder' -%}
                                       {{ 'products.product.preorder' | t }}

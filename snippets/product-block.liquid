@@ -238,18 +238,35 @@
             </div>
           </div>
           <span class="campaign-duration">{{ product.metafields.custom.campaign_duration }}</span>
-          {% else %}
+        {% else %}
           <div class="price no-compared">
             <span class="theme-money">{%- render "price", product: product, price: cheapest_variant.compare_at_price -%}</span>
           </div>
-          {% endif %}
+        {% endif %}
       {% else %}
-        <div class="a price no-compared">
           {% if product.price_varies %}{{ 'products.listing.from' | t }}{% endif %}
-          <span class="theme-money">{%- render "price", price: cheapest_variant.price, disable_alternative_pricing: true -%}</span>
-          {% if on_sale %}<span class="was-price theme-money">{%- render "price", price: cheapest_variant.compare_at_price, disable_alternative_pricing: true -%}</span>{% endif %}
-          {% render 'unit-price', variant: cheapest_variant %}
-        </div>
+
+          {% if product.tags contains 'campaign' %}
+            <div class="a price custom-price">
+              <div class="price-wrapper">
+                {{ product.compare_at_price | money }}
+                <span class="theme-money">{%- render "price", product: product, price: cheapest_variant.compare_at_price -%}</span>
+              </div>
+              <div class="discount-text">
+                <span class="saved-value">{{ product.metafields.custom.saved_value }}</span>
+                <span class="campaign">{{ product.metafields.custom.campaign }}</span>
+              </div>
+            </div>
+            <span class="campaign-duration">{{ product.metafields.custom.campaign_duration }}</span>
+          {% else %}
+            <div class="a price no-compared">
+              <span class="theme-money">{%- render "price", product: product, price: cheapest_variant.compare_at_price -%}</span>
+              {% if on_sale %}<span class="was-price theme-money">{%- render "price", price: cheapest_variant.compare_at_price, disable_alternative_pricing: true -%}</span>{% endif %}
+              {% comment %} <span class="a theme-money">{%- render "price", price: cheapest_variant.price, disable_alternative_pricing: true -%}</span> {% endcomment %}
+              {% render 'unit-price', variant: cheapest_variant %}
+            </div>
+          {% endif %}
+
       {% endif %}
 
       {% if show_alt_pricing and settings.alternative_pricing_field_list != blank and show_alt_pricing_over_price == false %}

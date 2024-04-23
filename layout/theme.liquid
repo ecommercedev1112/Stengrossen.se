@@ -312,37 +312,42 @@
 
     {% section 'popup' %}
     {% section 'footer' %}
+    <script src="{{ 'predictive-search.js' | asset_url }}" defer="defer"></script>
 
     <!-- Search form -->
     <div id="search-modal" class="theme-modal theme-modal--fullscreen" tabindex="-1">
-      <a href="#" data-modal-close class="modal-close">&times;</a>
       <div class="inner">
         <div class="container growth-area">
-          <form action="{{ routes.search_url }}" method="get" class="search-form" role="search">
-            {% comment %} Remove the following line to search everything, not just products {% endcomment %}
-            <input type="hidden" name="type" value="{{ settings.search_type }}">
-            <input type="hidden" name="options[prefix]" value="last">
+          <predictive-search>
+            <form action="{{ routes.search_url }}" method="get" role="search" class="search-form">
+              <a href="#" data-modal-close class="modal-close mobile">&times;</a>
+              <div class="custom-predictive inline-mini-form inline-mini-form--arrow">
+                <input
+                  id="Search"
+                  type="search"
+                  name="q"
+                  value="{{ search.terms | escape }}"
+                  role="combobox"
+                  aria-expanded="false"
+                  aria-owns="predictive-search-results"
+                  aria-controls="predictive-search-results"
+                  aria-haspopup="listbox"
+                  aria-autocomplete="list"
+                  placeholder="{{ 'general.search.page_placeholder' | t }}"
+                >
+                <input name="options[prefix]" type="hidden" value="last">
 
-            <div class="inline-mini-form inline-mini-form--arrow">
-              <input
-                type="text"
-                name="q"
-                placeholder="{{ 'general.search.page_placeholder' | t }}"
-                class="focus-me"
-                value="{{ search.terms | escape }}"
-                aria-label="{{ 'general.search.input_label' | t | escape }}"
-                autocomplete="off"
-                required
-              >
-              <button
-                class="compact no-hover"
-                type="submit"
-                aria-label="{{ 'general.search.search_button' | t | escape }}"
-              >
-                {% render 'svg-rarrow-long' %}
-              </button>
-            </div>
-          </form>
+                <div id="predictive-search" tabindex="-1"></div>
+                <button
+                  class="go-search compact no-hover"
+                  type="submit"
+                  aria-label="{{ 'general.search.search_button' | t | escape }}"
+                >
+                  {% render 'svg-search' %}
+                </button>
+              </div>
+            </form>
+          </predictive-search>
         </div>
       </div>
     </div>

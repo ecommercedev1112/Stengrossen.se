@@ -1,6 +1,5 @@
 jQuery(window).on("load", function () {    
     if (window.location.href === "https://stengrossen.se/cart") {
-        console.log("Page has finished loading");
         document.querySelectorAll('.cart-list .product-list').forEach(item => {
             item.querySelectorAll('.pallet__product').forEach(Item=> {
                 let clickPlus = Item.querySelector('.item-quantity.pro .plus');
@@ -181,7 +180,6 @@ $('.jc-cart .minus').click(function(e){
             $input.val(Number(qty) - 1);
         }
 
-        console.log("click - btn");
 
         changeItem($input);
     }
@@ -206,7 +204,6 @@ $('.jc-cart .plus').click(function(e){
     } else {
         $input.val(Number(qty) + 1);
     }
-    console.log("click + btn");
     changeItem($input);
     
 });
@@ -239,7 +236,6 @@ function changeItem(_this) {
             productValue = $cartpc;   
             palletValue = Math.max(0, (parseInt($cartpc) / palletNum).toFixed(3));
             ratioValue = Math.max(0, parseFloat(parseInt($cartpc) / parseFloat(consequent)).toFixed(2));
-            console.log();
         }
         if (dataType == "pallet") {
             palletValue = Math.ceil(parseInt($cartpc));
@@ -265,14 +261,12 @@ function changeItem(_this) {
         let subProductId1 = _this.data('properties')[2][1];
         let subProductId2 = _this.data('properties')[3][1];
         let $breaking_val = productValue % palletNum;
-        console.log(productValue, "productValue");
         
         _this.closest('.product-list')[0].querySelectorAll('.custom-product').forEach(item=> {
             let str_selectedId = item.querySelector('input').getAttribute('data-properties');
             let selectedId = JSON.parse(str_selectedId)[0][1];
             if (selectedId == main_Product_Id ) {
                 if (productValue == 0) {
-                    console.log("00000");
                     _this.closest('.item')[0].style.display = "none";
                     item.style.display = "none";
                 }
@@ -391,7 +385,6 @@ function changeItem(_this) {
                                             let palletNumElement = item.closest('.custom-product').querySelector('.product-quantity .product-price');
                                             let palletNumValue = item.closest('.custom-product').querySelector('.product-quantity .weight input');
                                             $(palletNumValue).val(Math.ceil(palletValue));
-                                            console.log(palletNumValue, "item");
                                             palletNumElement.innerHTML = 'Antal: ' + Math.ceil(palletValue);
                                         }
 
@@ -410,7 +403,6 @@ function changeItem(_this) {
 
 
     } else {
-        console.log("here");
         var nomalProductId = _this[0].id.split('_')[1];
         var productNum = _this.val();
         var productPrice = _this[0].getAttribute('data-price');
@@ -546,7 +538,6 @@ function itemDelete(updates, data) {
 
 // total weight
 function totalWeight() {
-    console.log('cal-wieght-here');
     let itemWei = 0;
     let itemPcs = 0;
     let calculatedWei = 0;
@@ -558,10 +549,6 @@ function totalWeight() {
             var numWei = parseFloat(itemWei.replace(',', '.').replace(' kg', ''));
             subItemWei = Number(numWei)*Number(itemPcs);             
             calculatedWei += Number(subItemWei);
-            console.log(itemPcs, "pcs");
-            console.log(numWei, "numWei");
-            console.log(subItemWei, "sub");
-            console.log(calculatedWei, "cal");
         })       
     })
     document.querySelector('.weight-value').innerHTML = (calculatedWei).toFixed(2) + ' kg';

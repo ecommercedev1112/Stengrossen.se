@@ -4329,7 +4329,6 @@ function ownKeys(object, enumerableOnly) {var keys = Object.keys(object);if (Obj
           if (nav.bar.getPositionSetting() !== "inline") {
             offset = nav.bar.height();
           }
-          console.log(product, "product");
           if (Object.keys(product).length === 0) {
             window.location.href = "https://stengrossen.se/cart";
           } else {
@@ -4374,8 +4373,6 @@ function ownKeys(object, enumerableOnly) {var keys = Object.keys(object);if (Obj
           $stickyBtn.removeAttr('disabled').removeClass('confirmation').html($stickyBtn.data('originalHtml'));
         }
 
-        console.log(data, "data--here");
-        console.log(data.status, 'daa.status---');
 
         //Not added, show message
         if (typeof data != 'undefined' && typeof data.status != 'undefined') {
@@ -7139,7 +7136,6 @@ function ownKeys(object, enumerableOnly) {var keys = Object.keys(object);if (Obj
         // disableButton.disabled = true;
       } else{
           $qty.val(Math.max(0, parseInt($(this).val()) * $unit) - parseInt(Math.ceil(parseInt($qty.val()) / $unit) * $unit - parseInt($qty.val())));
-          console.log($qty, "qty_pal");
           $ratio.val(Math.max(0, parseFloat(parseInt($qty.val()) / parseFloat($ratio.data('consequent'))).toFixed(2)));
       }
 
@@ -7158,14 +7154,12 @@ function ownKeys(object, enumerableOnly) {var keys = Object.keys(object);if (Obj
         $('input[data-product="Returpall"]').val($pallet_val);
         // product_price
         let $product_price = parseInt($('.price-pallet').find('.theme-money').data('product-price')) / 100;
-        console.log($product_price, "product_price");
         let $product_update =parseFloat($product_price * $quantity_real + $pallet_update).toFixed(2) ;
         let $price_format = Math.round($product_update).toLocaleString("en");        
         $('.price-pallet').find('.theme-money').html($price_format + ' kr');
 
         let inputElement = document.querySelector('input[name="items[0]quantity"]')
         inputElement.value= $pallet_val;
-        console.log(inputElement, "input"); 
         let input_breaking = document.querySelector('input[name="items[1]quantity"]')
         input_breaking.value = 0;
   
@@ -7173,7 +7167,6 @@ function ownKeys(object, enumerableOnly) {var keys = Object.keys(object);if (Obj
     
     // pallet
     $(document).on('change', '.quantity-wrapper [name=pallet]', function() {  
-      console.log("before_paellt");
       // display none breaking 
       $('.price-pallet').find('.pallet-price:last').css('display', 'none');
       let $unit = parseInt($(this).data('limit'));
@@ -7187,20 +7180,15 @@ function ownKeys(object, enumerableOnly) {var keys = Object.keys(object);if (Obj
         $qty.val(0);
       } else{
           $qty.val(Math.max(0, parseInt($(this).val()) * $unit) - parseInt(Math.ceil(parseInt($qty.val()) / $unit) * $unit - parseInt($qty.val())));
-          console.log($qty, "qty_pal");
           $ratio.val(Math.max(0, parseFloat(parseInt($qty.val()) / parseFloat($ratio.data('consequent'))).toFixed(2)));
       }
 
         let $pallet_price = $('.price-pallet').find('.pallet-value').data('pallet-1');
-        console.log($pallet_price, "pallet_price");
 
         let $quantity = parseInt($(this).closest('.product-detail__form__options--with-calculated-quantity').find('[name="quantity"]').val());
         let $pallet_real = parseFloat($(this).closest('.product-detail__form__options--with-calculated-quantity').find('[name="pallet"]').val());
         let $pallet_val = Math.ceil(parseFloat($(this).closest('.product-detail__form__options--with-calculated-quantity').find('[name="pallet"]').val()));
         
-        console.log($pallet_val, "pallet_val");  
-        console.log($quantity, "quantity");
-        console.log($pallet_real, "real");
 
         let $quantity_real = Math.ceil($pallet_real * $unit);
 
@@ -7215,7 +7203,6 @@ function ownKeys(object, enumerableOnly) {var keys = Object.keys(object);if (Obj
         $('input[data-product="Returpall"]').val($pallet_val);
         // product_price
         let $product_price = parseInt($('.price-pallet').find('.theme-money').data('product-price')) / 100;
-        console.log($product_price, "product_price");
         let $product_update =parseFloat($product_price * $quantity_real + $pallet_update).toFixed(2) ;
         let $price_format = Math.round($product_update).toLocaleString("en");
         
@@ -7223,7 +7210,6 @@ function ownKeys(object, enumerableOnly) {var keys = Object.keys(object);if (Obj
 
         let inputElement = document.querySelector('input[name="items[0]quantity"]')
         inputElement.value= $pallet_val;
-        console.log(inputElement, "input"); 
         let input_breaking = document.querySelector('input[name="items[1]quantity"]')
         input_breaking.value = 0;
         
@@ -7233,9 +7219,7 @@ function ownKeys(object, enumerableOnly) {var keys = Object.keys(object);if (Obj
     
     $(document).on('keyup', '.quantity-wrapper [name=quantity]', function() {
       if ($(this).closest('.product-detail__form__options--with-calculated-quantity').find('[name="quantity"]').data('type') == "bags") {
-        console.log("keyup pc for bags");
         let $ratio = $(this).closest('.product-detail__form__options--with-calculated-quantity').find('[name="ratio"]');
-        console.log($ratio.data('consequent'), "ratio");
         $ratio.val(Math.max(0, parseFloat(parseInt($(this).val()) * parseFloat($ratio.data('consequent'))).toFixed(2)));
         let $quantity = parseInt($(this).closest('.product-detail__form__options--with-calculated-quantity').find('[name="quantity"]').val());
 
@@ -7382,14 +7366,11 @@ function ownKeys(object, enumerableOnly) {var keys = Object.keys(object);if (Obj
 
     // ratio quantity
     $(document).on('click', '.ratio-wrapper [data-quantity]',function () {
-      console.log("here agaain----------->");
       if ($(this).closest('.product-detail__form__options--with-calculated-quantity').find('[name="quantity"]').data('type') == "bags") {
           var $input = $(this);
           let consequent = $(this).closest('.ratio-wrapper').find('[name="ratio"]').data('consequent');
-          console.log(consequent, "consequent");
           var $parent = $input.closest('.ratio-wrapper');
           var adj = $input.data('quantity') == 'up' ? consequent : -consequent;
-          console.log(adj, "adj");
           let $qty = $parent.find('input');
           $qty.val(Math.max(0, Number($qty.val()) + adj).toFixed(2));
           let pc = $qty.val()/consequent;
@@ -7405,12 +7386,10 @@ function ownKeys(object, enumerableOnly) {var keys = Object.keys(object);if (Obj
       }
 
       if ($(this).closest('.product-detail__form__options--with-calculated-quantity').find('[name="quantity"]').data('type') == "pallet") {
-        console.log("ratio-change");
         $('.sub-price').css('display', 'block');
         var $input = $(this);
         let consequent = $(this).closest('.ratio-wrapper').find('[name="ratio"]').data('consequent');
         let ratio_unit = Number(1/consequent).toFixed(2);
-        console.log(ratio_unit, "ratio_unit");
         let adj = $input.data('quantity') == 'up' ? Number(ratio_unit) : -Number(ratio_unit);
         let $ratio_qty = $input.closest('.ratio-wrapper').find('input');
         let ratioVal = Number($ratio_qty.val()) + adj;
@@ -7453,7 +7432,6 @@ function ownKeys(object, enumerableOnly) {var keys = Object.keys(object);if (Obj
           breaking.removeClass('remove');
           $('.pallet-price').css('display', 'flex');
           $breaking_price = $('.price-pallet').find('.pallet-value:last').data('pallet-2'); 
-          console.log($breaking_price, "breakingprice");
           input_breaking.value = 1;
         }
 
@@ -7477,7 +7455,6 @@ function ownKeys(object, enumerableOnly) {var keys = Object.keys(object);if (Obj
 
     // ratio
     $(document).on('keyup', '.ratio-wrapper [name="ratio"]', function () {
-      console.log("ratio-key");
       $('.sub-price').css('display', 'block');
       let $ratio = $(this);
       let consequent = $ratio.data('consequent');
@@ -7485,7 +7462,6 @@ function ownKeys(object, enumerableOnly) {var keys = Object.keys(object);if (Obj
       let $pallet = $(this).closest('.product-detail__form__options--with-calculated-quantity').find('[name="pallet"]');
       /* store the entered value */
       var antecedent = $ratio.val();
-      console.log(antecedent, "herer");
       /* make the quantity input reflect the calculated result of this number */
       let $qty = $ratio.closest('.product-detail__form__options--with-calculated-quantity').find('[name="quantity"]');
       /*
@@ -7508,7 +7484,6 @@ function ownKeys(object, enumerableOnly) {var keys = Object.keys(object);if (Obj
 
       // display none breaking
       let $remainder = $qty_real.val() % $unit;
-      console.log($remainder, "remainder");
       let breaking = $('.price-pallet').find('.pallet-price:last');
 
       // number of pallet and breaking
@@ -7525,7 +7500,6 @@ function ownKeys(object, enumerableOnly) {var keys = Object.keys(object);if (Obj
         breaking.removeClass('remove');
         $('.pallet-price').css('display', 'flex');
         $breaking_price = $('.price-pallet').find('.pallet-value:last').data('pallet-2'); 
-        console.log($breaking_price, "breakingprice");
         input_breaking.value = 1;
       }
 
@@ -7535,7 +7509,6 @@ function ownKeys(object, enumerableOnly) {var keys = Object.keys(object);if (Obj
       // product
       let $product_price = parseInt($('.price-pallet').find('.theme-money').data('product-price')) / 100;
       let $product_update =parseFloat($product_price * $qty.val() + $breaking_price/100 + $pallet_update).toFixed(2);
-      console.log($product_update, "update");
       let $price_format = Math.round($product_update).toLocaleString("en");
       $('.price-pallet').find('.theme-money').html($price_format + ' kr');
       $('.price-pallet').find('.pallet-value:first').html($pallet_price*$pallet_val/100 + ' kr');
@@ -7793,20 +7766,11 @@ document.querySelectorAll('.product-price').forEach(item => {
     }
 })
 
-// custom search result
-if (document.querySelector('.search-btn')) {
-  document.querySelector('.search-btn').addEventListener('click', (e) => {
-    // e.preventDefault();
-    setTimeout(() => {
-     document.querySelectorAll('.product-block').forEach(item => {
-        if (item.getAttribute('data-product-show') == "true") {
-          item.style.display = "none";
-        }        
-      })
-  }, "1000");
-  })
-}
-
+// document.querySelector('.delete-input').addEventListener('click', function() {
+//   let searchInput =  document.querySelector('#Search');
+//   searchInput.value = "";
+//   document.querySelector('#predictive-search').style.display = "none";
+// })
 
 
 

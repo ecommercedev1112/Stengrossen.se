@@ -346,15 +346,46 @@
             </a>
           {% endif %}
 
-          <a class="cart nav-search"
-             href="{{ routes.search_url }}"
-             aria-label="{{ 'layout.header.search' | t | escape }}"
-             data-modal-toggle="#search-modal">
-            {% render 'svg-search' %}
-            <span class="text-link">{{ 'layout.header.search' | t }}</span>
-          </a>
+          <div class="custom-predictive">
+            <predictive-search>
+              <form action="{{ routes.search_url }}" method="get" role="search" class="predictive-form">
+                <input
+                  id="Search"
+                  type="search"
+                  name="q"
+                  value="{{ search.terms | escape }}"
+                  role="combobox"
+                  aria-expanded="false"
+                  aria-owns="predictive-search-results"
+                  aria-controls="predictive-search-results"
+                  aria-haspopup="listbox"
+                  aria-autocomplete="list"
+                  class="predictive-search-input"
+                  placeholder="{{ 'general.search.page_placeholder' | t }}"
+                >
+                <input name="options[prefix]" type="hidden" value="last">
 
-          <a data-cc-animate-click class="cart cart-icon--{{ section.settings.nav_cart_icon }}" href="{{ routes.cart_url }}" aria-label="{{ 'layout.navigation.cart' | t | escape }}">
+                <div id="predictive-search" tabindex="-1"></div>
+              </form>
+            </predictive-search>
+            {% comment %} <a href="#" class="delete-input">&times;</a> {% endcomment %}
+            <a class="cart nav-search button desktop"
+              aria-label="{{ 'layout.header.search' | t | escape }}">
+              {% render 'svg-search' %}
+              <span class="text-link">{{ 'layout.header.search' | t }}</span>
+            </a>
+            <a class="cart nav-search button mobile"
+              href="{{ routes.search_url }}"
+              aria-label="{{ 'layout.header.search' | t | escape }}"
+              data-modal-toggle="#search-modal">
+              {% render 'svg-search' %}
+              <span class="text-link">{{ 'layout.header.search' | t }}</span>
+            </a>
+
+          </div>
+
+
+          <a data-cc-animate-click class="custom-cart-icon cart cart-icon--{{ section.settings.nav_cart_icon }}" href="{{ routes.cart_url }}" aria-label="{{ 'layout.navigation.cart' | t | escape }}">
             {% if section.settings.nav_cart_icon == "basket1" %}
               {% render 'svg-cart' %}
             {% elsif section.settings.nav_cart_icon == "basket2" %}
@@ -374,8 +405,7 @@
         <div class="nav-container">
           <div class="nav-body container growth-area" data-root-nav="true">
             <div class="nav main-nav" role="navigation" aria-label="{{ 'layout.header.menu_aria_label' | t | escape }}">
-              <ul>
-                
+              <ul>               
 
                 {% for link in linklists[section.settings.menu_linklist].links %}
                   
@@ -384,7 +414,6 @@
                     {% for collection in collections %}
                       {% assign title = collection.title %}
                       {% if title == link.title %}
-                        <script>console.log({{ collection.title | json }})</script>   
                         {% if collection.metafields.custom.menu_logo %}                          
                          <img  srcset="
                                   {%- if collection.metafields.custom.menu_logo.width >= 375 -%}{{ collection.metafields.custom.menu_logo | image_url: width: 375 }} 375w,{%- endif -%}
